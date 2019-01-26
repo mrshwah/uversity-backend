@@ -31,5 +31,7 @@ def get_user_orders(token):
 
 
 # courses
-def create_event(event_args):
-    pass
+def create_event(token, event_args):
+    eventbrite = Eventbrite(token)
+    event = eventbrite.post_event(event_args)
+    return event

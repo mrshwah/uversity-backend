@@ -1,21 +1,16 @@
+from datetime import datetime
 from models.courses import Course
 
 
 # Services for Course
 def create_course(course_args):
-    print(course_args)
-    # course = Course(eb_id=course_args['id'],
-    #                 teacher=course_args['teacher'],
-    #                 title=course_args['name']['text'],
-    #                 location=,
-    #                 category=,
-    #                 difficulty=,
-    #                 image_links=,
-    #                 start_date_and_time=,
-    #                 end_date_and_time=,
-    #                 student_list=,
-    #                 capacity=)
-
+    course = Course(eb_id=course_args['eb_id'],
+                    name=course_args['name'],
+                    start=datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ"),
+                    end=datetime.strptime(course_args['end'], "%Y-%m-%dT%H:%M:%SZ"),
+                    capacity=course_args['capacity'])
+    course.save()
+    return course.to_dict()
 
 
 # Services for CourseList
