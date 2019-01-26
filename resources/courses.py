@@ -16,7 +16,7 @@ start_parser.add_argument('utc', location='start')
 
 end_parser = reqparse.RequestParser()
 end_parser.add_argument('timezone', location='end')
-end_parser.add_argument('utc', location='e')
+end_parser.add_argument('utc', location='end')
 
 
 class Course(Resource):
@@ -25,14 +25,14 @@ class Course(Resource):
         try:
             course = courses.get_course(course_id)
         except IndexError:
-            return {'error': True, 'message': 'Course not found!'}, 403
+            return {'error': True, 'message': 'Course not found!'}, 404
         return {'course': course}
 
     @jwt_required
     def post(self):
         args = parser.parse_args()
         start_args = start_parser.parse_args(args)
-        end_args = start_parser.parse_args(args)
+        end_args = end_parser.parse_args(args)
         user_id = get_jwt_identity()
         oauth_token = users.get_user(user_id)['oauth_token']
         event_args = {'event': {'name': {'html': '<p>{}<p>'.format(args['name'])},
@@ -47,8 +47,18 @@ class Course(Resource):
         return {'course': course}
 
     @jwt_required
-    def put(self):
-        pass
+    def put(self, course_id):
+        try:
+            course = courses.get_course(course_id)
+        except IndexError:
+            return {'error': True, 'message': 'Course not found!'}, 404
+        args = parser.parse_args()
+        start_args = start_parser.parse_args(args)
+        end_args = end_parser.parse_args(args)
+        args['start'] = start_args['utc']
+        args['end'] = end_args['utc']
+        course = courses.update_course(course_id, args)
+        return {'course': course}
 
     def delete(self):
         pass
