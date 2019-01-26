@@ -5,6 +5,7 @@ from services.users import update_user, delete_user, get_user
 
 put_parser = reqparse.RequestParser()
 put_parser.add_argument('interests', action='append')
+put_parser.add_argument('course_history', action='append')
 # put_parser.add_argument('student_reputation')
 
 

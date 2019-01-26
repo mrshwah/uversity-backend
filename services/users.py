@@ -29,6 +29,7 @@ def update_user(update_args, user_id):
     user = User.objects(eb_id=user_id)[0]
 
     user.interests = update_args['interests']
+    user.course_history = update_args['course_history']
     # user.student_reputation = update_args['student_reputation']
     user.save()
 
