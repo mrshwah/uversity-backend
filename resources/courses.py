@@ -95,6 +95,7 @@ class CourseList(Resource):
 class CourseEnroll(Resource):
     @jwt_required
     def post(self, course_id):
+        print(course_id)
         user_id = get_jwt_identity()
-        courses.enroll_user_in_course(course_id, user_id)
-        return {'course': courses}
+        course = courses.enroll_user_in_course(course_id, user_id)
+        return {'course': course}

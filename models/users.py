@@ -14,6 +14,7 @@ class User(Document):
 
     def to_dict(self):
         dictionary = self.to_mongo()
+        dictionary['course_history'] = [Course.objects.get(id=id).to_dict() for id in dictionary['course_history']]
         return {k: v for (k, v) in dictionary.items() if k != '_id'}
 
     def add_course(self, course_id):
