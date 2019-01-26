@@ -6,6 +6,7 @@ chardet==3.0.4
 Click==7.0
 eventbrite==3.3.3
 Flask==1.0.2
+Flask-Cors==3.0.7
 Flask-RESTful==0.3.7
 Flask-WTF==0.14.2
 identify==1.2.0
