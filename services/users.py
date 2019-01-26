@@ -2,7 +2,11 @@ from models.users import User
 
 
 def get_user(user_id):
-    user = User.objects(eb_id=user_id)[0]
+    try:
+        user = User.objects(eb_id=user_id)[0]
+    except IndexError:
+        return IndexError
+
     return user.to_dict()
 
 
@@ -22,3 +26,24 @@ def create_user(user_args):
     user.save()
 
     return user.to_dict()
+
+
+def update_user(update_args, user_id):
+    user = User.objects(eb_id=user_id)[0]
+
+    user.interests = update_args['interests']
+    # user.student_reputation = update_args['student_reputation']
+    user.save()
+
+    return user.to_dict()
+
+
+def delete_user(user_id):
+    try:
+        user = User.objects(eb_id=user_id)[0]
+    except IndexError:
+        return IndexError
+
+    user.delete()
+
+    return {user_id: {'deleted': True}}
