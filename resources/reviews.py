@@ -31,10 +31,10 @@ class Review(Resource):
         review = reviews.create_review(review_args)
         return {'review': review}
 
-    def delete(self):
-        args = post_parser.parse_args()
+    def delete(self, id):
+        reviews = ReviewModel.objects.get(id)
         reviews.delete_review(args)
-        pass
+        return True
 
 
 post_parser_list = reqparse.RequestParser()

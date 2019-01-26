@@ -1,9 +1,10 @@
-from mongoengine import Document, StringField, IntField, FloatField
+from mongoengine import Document, StringField, IntField, FloatField, ReferenceField
+from models.users import User
 
 
 class Review(Document):
     comment = StringField()
-    poster_id = StringField(required=True)
+    poster_id = ReferenceField(User)
     instructor_id = StringField(required=True)
     class_name = StringField(required=True)
     environment_rating = IntField(required=True)
@@ -14,5 +15,6 @@ class Review(Document):
 
     def to_dict(self):
         dictionary = self.to_mongo()
+        dictionary['poster_id'] = User.objects.get(id=dictionary['poster_id']).to_dict()
         return {k: v for (k, v) in dictionary.items() if k != '_id'}
 
