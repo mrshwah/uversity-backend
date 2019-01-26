@@ -1,6 +1,10 @@
 from models.reviews import Review
 
 
+def calculate_aggregate(cla, env, exp, org):
+    return cla+env+exp+org/4
+
+
 #   Create Review
 def create_review(review_args):
     review = Review(comment=review_args['comment'],
@@ -11,6 +15,10 @@ def create_review(review_args):
                     organization_rating=review_args['organization_rating'],
                     clarity_rating=review_args['clarity_rating'],
                     expertise_rating=review_args['expertise_rating'])
+    # review.aggregate_rating = calculate_aggregate(review.clarity_rating,
+    #                                               review.environment_rating,
+    #                                               review.expertise_rating,
+    #                                               review.organization_rating)
     review.save()
     return review.to_dict()
 

@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, IntField
+from mongoengine import Document, StringField, IntField, FloatField
 
 
 class Review(Document):
@@ -10,6 +10,7 @@ class Review(Document):
     organization_rating = IntField(required=True)
     clarity_rating = IntField(required=True)
     expertise_rating = IntField(required=True)
+    aggregate_rating = FloatField()
 
     def to_dict(self):
         dictionary = self.to_mongo()

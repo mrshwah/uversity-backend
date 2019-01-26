@@ -17,7 +17,6 @@ for arg in args:
 
 class Review(Resource):
     def get(self, id):
-        # args = post_parser.parse_args()
         review = ReviewModel.objects(id__exists=id)[0]
         review = review.to_dict()
         return {'review': review}
