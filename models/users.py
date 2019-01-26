@@ -7,7 +7,7 @@ class User(Document):
     last_name = StringField(required=True)
     email = StringField(required=True)
     # profile_img = ImageField()
-    interests = ListField()
+    interests = ListField(required=False)
 
     def to_dict(self):
         dictionary = self.to_mongo()
