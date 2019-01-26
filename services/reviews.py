@@ -28,6 +28,8 @@ def create_review(review_args):
 
 #   Delete Review
 def delete_review(review_args):
-    review = Review.objects(id__exists=review_args['id'])
-    review.delete()
-    return True
+    review = Review.objects.get(review_args['id'])
+    if review.delete():
+        return {"message": "success!"}
+    else:
+        return {"message": "failed"}

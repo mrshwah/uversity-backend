@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from services.instructors import create_instructor
 from models.instructors import Instructor as InstructorModel
 
+
 post_parser = reqparse.RequestParser()
 post_parser.add_argument('user')
 
@@ -22,7 +23,12 @@ class Instructor(Resource):
         instructor = create_instructor(instructor_args)
         return {'instructor': instructor}
 
-    def delete(self):
-        args = post_parser.parse_args()
-        Instructor.delete_review(args)
-        return True
+    # Doesn't work
+    def delete(self, id):
+        instructor = InstructorModel.objects.get(id)    #idfk dood
+        user_child = instructor['user']
+        if instructor.delete():
+            user_child.delete()
+            return {"message": "success!"}
+        else:
+            return {"message": "failed"}
