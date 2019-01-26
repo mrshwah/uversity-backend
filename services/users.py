@@ -22,3 +22,16 @@ def create_user(user_args):
     user.save()
 
     return user.to_dict()
+
+
+def update_user(update_args, user_id):
+    try:
+        user = User.objects(eb_id=user_id)[0]
+    except IndexError:
+        return IndexError
+
+    user.interests = update_args['interests']
+    # user.student_reputation = update_args['student_reputation']
+    user.save()
+
+    return user.to_dict()
