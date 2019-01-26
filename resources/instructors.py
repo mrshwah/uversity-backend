@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from services.instructors import create_instructor
-from models.instructors import Instructor as InstructorModel
+from models.users import Instructor as InstructorModel
 
 
 post_parser = reqparse.RequestParser()

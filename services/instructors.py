@@ -1,6 +1,6 @@
 from models.reviews import Review
 from models.users import User
-from models.instructors import Instructor
+from models.users import Instructor
 
 
 #   Create Review
