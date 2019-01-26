@@ -2,7 +2,7 @@ from mongoengine import Document, StringField, ImageField, ListField
 
 
 class User(Document):
-    eb_id = StringField(unique=True)
+    eb_id = StringField(unique=True, required= True)
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     email = StringField(required=True)
