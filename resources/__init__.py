@@ -12,4 +12,4 @@ def init_app(app):
     api.add_resource(ClientId, '/client_id')
     api.add_resource(Users, '/users')
     api.add_resource(ReviewList, '/reviews')
-    api.add_resource(Review, '/reviews/<string:id>')
+    api.add_resource(Review, '/review/<string:id>')
