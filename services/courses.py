@@ -8,6 +8,11 @@ def get_course(course_id):
     return course.to_dict()
 
 
+def get_courses():
+    courses = [course.to_dict() for course in Course.objects()]
+    return courses
+
+
 def create_course(course_args):
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
@@ -17,7 +22,7 @@ def create_course(course_args):
     course.save()
     return course.to_dict()
 
-
+  
 def update_course(course_id, course_args):
     course = Course.objects.get(eb_id=course_id)
     course.name = course_args['name']
@@ -32,9 +37,3 @@ def delete_course(course_id):
     course = Course.objects.get(eb_id=course_id)
     course.delete()
     return True
-
-
-# Services for CourseList
-def get_courses(course_args):
-    courses = [ob.to_dict() for ob in Course.objects()]
-    return courses

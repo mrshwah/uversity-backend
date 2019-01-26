@@ -82,5 +82,7 @@ class Course(Resource):
 
 # Methods for a list of courses
 class CourseList(Resource):
+    @jwt_required
     def get(self):
-        pass
+        course_list = courses.get_courses()
+        return {'courses': course_list}
