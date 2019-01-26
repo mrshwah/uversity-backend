@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 79
+include = '\.py'
+exclude = '''
+/(
+    \.git
+  | \uenv
+  | \.gitignore
+  | \requirements.txt
+  | \.flake8
+)/
+'''
