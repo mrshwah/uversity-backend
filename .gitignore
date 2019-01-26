@@ -1,4 +1,4 @@
 .env
 uenv/
 .idea/
-__pycache__/g
+__pycache__/
