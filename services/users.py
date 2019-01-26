@@ -19,7 +19,6 @@ def create_user(user_args):
         email=primary_email,
         oauth_token=user_args['oauth_token']
     )
-    user = User(eb_id=user_args['id'])
     user.save()
 
     return user.to_dict()
