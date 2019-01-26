@@ -1,4 +1,3 @@
-from models.courses import Course
 from mongoengine import Document, StringField, ListField, ReferenceField, FloatField
 
 
@@ -24,9 +23,4 @@ class User(Document):
         dictionary = self.to_mongo()
         dictionary['instructor'] = dictionary['instructor'].to_dict()
         return {k: v for (k, v) in dictionary.items() if k != '_id'}
-
-    def add_course(self, course_id):
-        course = Course.objects(eb_id=course_id)
-        self.course_history += course
-        self.save()
 
