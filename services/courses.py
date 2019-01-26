@@ -8,6 +8,11 @@ def get_course(course_id):
     return course.to_dict()
 
 
+def get_courses():
+    courses = [course.to_dict() for course in Course.objects()]
+    return courses
+
+
 def create_course(course_args):
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
