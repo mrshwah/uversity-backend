@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
-from models.users import User as UserModel
 from services.users import update_user, delete_user, get_user
 
 put_parser = reqparse.RequestParser()
@@ -8,13 +7,13 @@ put_parser.add_argument('interests', action='append')
 # put_parser.add_argument('student_reputation')
 
 
-class Users(Resource):
+class User(Resource):
     @jwt_required
     def get(self, user_id):
         try:
             user = get_user(user_id)
         except IndexError:
-            return {'error': True, 'message': 'User not found!'}
+            return {'error': True, 'message': 'User not found!'}, 404
 
         return user
 
@@ -24,7 +23,7 @@ class Users(Resource):
         try:
             updated_user = update_user(args, user_id)
         except IndexError:
-            return {'error': True, 'message': 'User not found!'}
+            return {'error': True, 'message': 'User not found!'}, 404
 
         return {'user': updated_user}
 
@@ -33,6 +32,6 @@ class Users(Resource):
         try:
             resp = delete_user(user_id)
         except IndexError:
-            return {'error': True, 'message': 'User not found!'}
+            return {'error': True, 'message': 'User not found!'}, 404
 
         return resp
