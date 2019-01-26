@@ -1,5 +1,6 @@
 from datetime import datetime
 from models.courses import Course
+from models.users import User
 
 
 # Services for Course
@@ -43,3 +44,11 @@ def delete_course(course_id):
     course = Course.objects.get(eb_id=course_id)
     course.delete()
     return True
+
+
+def enroll_user_in_course(course_id, user_id):
+    user = User.objects.get(eb_id=user_id)
+    course = Course.objects.get(eb_id=course_id)
+    user.add_course(course_id)
+    course.enroll_user(user_id)
+    return course.to_dict()

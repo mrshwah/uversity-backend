@@ -11,7 +11,7 @@ class Course(Document):
     # image_links = ListField(URLField())
     start = DateTimeField()
     end = DateTimeField()
-    # student_list = ListField()
+    student_list = ListField(StringField())
     capacity = IntField()
 
     def to_dict(self):
@@ -20,3 +20,8 @@ class Course(Document):
         dictionary['start'] = dictionary['start'].isoformat(' ')
         dictionary['end'] = dictionary['end'].isoformat(' ')
         return dictionary
+
+    def enroll_user(self, user_id):
+        self.student_list = self.student_list + [user_id]
+        self.capacity -= 1
+        self.save()
