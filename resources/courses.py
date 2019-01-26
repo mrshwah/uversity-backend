@@ -44,6 +44,7 @@ class Course(Resource):
         args['eb_id'] = event_id
         args['start'] = start_args['utc']
         args['end'] = end_args['utc']
+        args['instructor'] = user_id
         course = courses.create_course(args)
         return {'course': course}
 

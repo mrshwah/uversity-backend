@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 import services.reviews as reviews
 from models.reviews import Review as ReviewModel
 
@@ -16,24 +17,21 @@ for arg in args:
 
 
 class Review(Resource):
-    def get(self, id):
-        review = ReviewModel.objects(id__exists=id)[0]
-        review = review.to_dict()
-        return {'review': review}
-
     def put(self):
         #   This method should be used in the case of updating reviews.
         pass
 
+    @jwt_required
     def post(self):
         args = post_parser.parse_args()
         review_args = args
         review = reviews.create_review(review_args)
         return {'review': review}
 
-    def delete(self, id):
-        reviews = ReviewModel.objects.get(id)
-        reviews.delete_review(args)
+    @jwt_required
+    def delete(self, review_id):
+        review = ReviewModel.objects.get(id=id)
+        review.delete_review(args)
         return True
 
 
@@ -51,6 +49,7 @@ for arg in args:
 
 
 class ReviewList(Resource):
-    def get(self):
-        reviews = [ob.to_dict() for ob in ReviewModel.objects()]
-        return reviews
+    @jwt_required
+    def get(self, instructor_id):
+        review_list = reviews.get_reviews(instructor_id)
+        return {'reviews': review_list}

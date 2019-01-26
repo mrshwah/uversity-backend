@@ -20,12 +20,15 @@ def get_courses_by_category(category):
 
 
 def create_course(course_args):
+    instructor = User.objects.get(eb_id=course_args['user_id'])
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
                     start=datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ"),
                     end=datetime.strptime(course_args['end'], "%Y-%m-%dT%H:%M:%SZ"),
                     capacity=course_args['capacity'],
-                    category=course_args['category'])
+                    category=course_args['category'],
+                    instructor=instructor
+                    )
     course.save()
     return course.to_dict()
 
