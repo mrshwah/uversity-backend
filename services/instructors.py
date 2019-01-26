@@ -8,10 +8,3 @@ def create_instructor(instructor_args):
     instructor = Instructor(user=user)
     instructor.save()
     return instructor.to_dict()
-
-
-#   Delete Instructor
-def delete_instructor(instructor_args):
-    instructor = Instructor.objects(id__exists=instructor_args['id'])
-    instructor.delete()
-    return True

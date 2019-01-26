@@ -22,13 +22,3 @@ class Instructor(Resource):
         instructor_args = args
         instructor = create_instructor(instructor_args)
         return {'instructor': instructor}
-
-    # Doesn't work
-    def delete(self, id):
-        instructor = InstructorModel.objects.get(id)    #idfk dood
-        user_child = instructor['user']
-        if instructor.delete():
-            user_child.delete()
-            return {"message": "success!"}
-        else:
-            return {"message": "failed"}
