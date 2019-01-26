@@ -57,4 +57,5 @@ class Course(Resource):
 # Methods for a list of courses
 class CourseList(Resource):
     def get(self):
-        pass
+        course_list = courses.get_courses()
+        return {'courses': course_list}
