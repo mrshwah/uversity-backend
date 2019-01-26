@@ -6,7 +6,7 @@ class Instructor(Document):
 
     def to_dict(self):
         dictionary = self.to_mongo()
-        return {k: v for (k, v) in dictionary.items() if k != '_id'}
+        return {k: str(v) for (k, v) in dictionary.items()}
 
 
 class User(Document):
@@ -21,6 +21,9 @@ class User(Document):
 
     def to_dict(self):
         dictionary = self.to_mongo()
-        dictionary['instructor'] = dictionary['instructor'].to_dict()
+        try:
+            dictionary['instructor'] = Instructor.objects.get(id=dictionary['instructor']).to_dict()
+        except KeyError:
+            pass
+        dictionary['_id'] = str(dictionary['_id'])
         return {k: v for (k, v) in dictionary.items() if k != '_id'}
-

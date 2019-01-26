@@ -16,5 +16,8 @@ class Instructor(Resource):
     @jwt_required
     def post(self):
         user_id = get_jwt_identity()
-        instructor = create_instructor(user_id)
+        try:
+            instructor = create_instructor(user_id)
+        except Exception:
+            return {'error': True, 'message': 'Instructor already exists for this user.'}
         return {'instructor': instructor}
