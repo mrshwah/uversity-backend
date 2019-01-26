@@ -1,8 +1,13 @@
-from mongoengine import Document, StringField
+from mongoengine import Document, StringField, ImageField, ListField
 
 
 class User(Document):
-    eb_id = StringField()
+    eb_id = StringField(unique=True)
+    first_name = StringField(required=True)
+    last_name = StringField(required=True)
+    email = StringField(required=True)
+    # profile_img = ImageField()
+    interests = ListField()
 
     def to_dict(self):
         dictionary = self.to_mongo()
