@@ -5,6 +5,7 @@ from models.instructors import Instructor as InstructorModel
 post_parser = reqparse.RequestParser()
 post_parser.add_argument('user')
 
+
 class Instructor(Resource):
     def get(self, id):
         instructor = InstructorModel.objects(id__exists=id)[0]
