@@ -17,4 +17,4 @@ def init_app(app):
     api.add_resource(User, '/user/<string:user_id>')
     api.add_resource(Instructor, '/instructor', '/instructor/<string:id>')
     api.add_resource(Course, '/course', '/course/<int:course_id>')
-    api.add_resource(CourseList, '/courses')
+    api.add_resource(CourseList, '/courses', '/courses/<string:category>')
