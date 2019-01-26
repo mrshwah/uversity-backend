@@ -3,14 +3,16 @@ from models.reviews import Review as ReviewModel
 import services.reviews as reviews
 
 post_parser = reqparse.RequestParser()
-post_parser.add_argument('comment')
-post_parser.add_argument('poster_id')
-post_parser.add_argument('instructor_id')
-post_parser.add_argument('class_name')
-post_parser.add_argument('environment_rating')
-post_parser.add_argument('organization_rating')
-post_parser.add_argument('clarity_rating')
-post_parser.add_argument('expertise_rating')
+args = ['comment',
+        'poster_id',
+        'instructor_id',
+        'class_name',
+        'environment_rating',
+        'organization_rating',
+        'clarity_rating',
+        'expertise_rating']
+for arg in args:
+    post_parser.add_argument(arg)
 
 
 class Reviews(Resource):

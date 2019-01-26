@@ -19,3 +19,4 @@ def create_review(review_args):
 def delete_review(review_args):
     review = Review.objects(id__exists=review_args['id'])
     review.delete()
+    return True
