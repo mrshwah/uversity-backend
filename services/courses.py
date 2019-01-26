@@ -21,9 +21,3 @@ def create_course(course_args):
                     capacity=course_args['capacity'])
     course.save()
     return course.to_dict()
-
-
-# Services for CourseList
-def get_courses(course_args):
-    courses = [ob.to_dict() for ob in Course.objects()]
-    return courses
