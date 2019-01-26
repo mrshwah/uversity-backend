@@ -29,6 +29,6 @@ class Reviews(Resource):
         return {'review': review}
 
     def delete(self):
-        #   Please write logic for deleting reviews
-        #   If user_id matches poster_id ->
+        args = post_parser.parse_args()
+        reviews.delete_review(args)
         pass

@@ -1,6 +1,7 @@
 from models.reviews import Review
 
 
+#   Create Review
 def create_review(review_args):
     review = Review(comment=review_args['comment'],
                     poster_id=review_args['poster_id'],
@@ -12,3 +13,9 @@ def create_review(review_args):
                     expertise_rating=review_args['expertise_rating'])
     review.save()
     return review.to_dict()
+
+
+#   Delete Review
+def delete_review(review_args):
+    review = Review.objects(id__exists=review_args['id'])
+    review.delete()
