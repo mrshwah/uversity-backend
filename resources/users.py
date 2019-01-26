@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
 from models.users import User as UserModel
-from services.users import update_user
+from services.users import update_user, delete_user
 
 put_parser = reqparse.RequestParser()
 put_parser.add_argument('interests', action='append')
@@ -24,5 +24,11 @@ class Users(Resource):
 
         return {'user': updated_user}
 
-    def delete(self):
-        pass
+    @jwt_required
+    def delete(self, user_id):
+        try:
+            resp = delete_user(user_id)
+        except IndexError:
+            return {'error': True, 'message': 'User not found!'}
+
+        return resp

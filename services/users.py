@@ -35,3 +35,14 @@ def update_user(update_args, user_id):
     user.save()
 
     return user.to_dict()
+
+
+def delete_user(user_id):
+    try:
+        user = User.objects(eb_id=user_id)[0]
+    except IndexError:
+        return IndexError
+
+    user.delete()
+
+    return {user_id: {'deleted': True}}
