@@ -35,3 +35,15 @@ def create_event(token, event_args):
     eventbrite = Eventbrite(token)
     event = eventbrite.post_event(event_args)
     return event
+
+
+def update_event(token, event_id, event_args):
+    eventbrite = Eventbrite(token)
+    event = eventbrite.post("/events/{}/".format(event_id), data=event_args)
+    return event
+
+
+def delete_event(token, event_id):
+    eventbrite = Eventbrite(token)
+    event = eventbrite.delete("/events/{}/".format(event_id))
+    return event

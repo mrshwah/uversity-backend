@@ -2,10 +2,7 @@ from models.users import User
 
 
 def get_user(user_id):
-    try:
-        user = User.objects(eb_id=user_id)[0]
-    except IndexError:
-        return IndexError
+    user = User.objects(eb_id=user_id)[0]
 
     return user.to_dict()
 
