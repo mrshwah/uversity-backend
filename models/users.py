@@ -3,6 +3,7 @@ from mongoengine import Document, StringField
 
 class User(Document):
     eb_id = StringField()
+    oauth_token = StringField()
 
     def to_dict(self):
         dictionary = self.to_mongo()
