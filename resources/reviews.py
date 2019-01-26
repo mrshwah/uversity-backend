@@ -4,6 +4,9 @@ import services.reviews as reviews
 
 post_parser = reqparse.RequestParser()
 post_parser.add_argument('comment')
+post_parser.add_argument('poster_id')
+post_parser.add_argument('instructor_id')
+post_parser.add_argument('class_name')
 post_parser.add_argument('environment_rating')
 post_parser.add_argument('organization_rating')
 post_parser.add_argument('clarity_rating')
@@ -16,6 +19,7 @@ class Reviews(Resource):
         return reviews
 
     def put(self):
+        #   This method should be used in the case of updating reviews.
         pass
 
     def post(self):
@@ -25,4 +29,6 @@ class Reviews(Resource):
         return {'review': review}
 
     def delete(self):
+        #   Please write logic for deleting reviews
+        #   If user_id matches poster_id ->
         pass
