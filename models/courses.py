@@ -13,6 +13,7 @@ class Course(Document):
     end = DateTimeField()
     student_list = ListField(StringField())
     capacity = IntField()
+    is_cancelled = BooleanField(default=False)
 
     def to_dict(self):
         dictionary = self.to_mongo()

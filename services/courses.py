@@ -46,6 +46,12 @@ def delete_course(course_id):
     return True
 
 
+def cancel_course(course_id):
+    course = Course.objects.get(eb_id=course_id)
+    course.is_cancelled = True
+    return True
+
+
 def enroll_user_in_course(course_id, user_id):
     user = User.objects.get(eb_id=user_id)
     course = Course.objects.get(eb_id=course_id)
