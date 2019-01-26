@@ -48,7 +48,7 @@ class Course(Resource):
 
     @jwt_required
     def put(self):
-        passgg
+        pass
 
     def delete(self):
         pass
