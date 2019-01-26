@@ -9,6 +9,7 @@ parser.add_argument('name')
 parser.add_argument('start', type=dict)
 parser.add_argument('end', type=dict)
 parser.add_argument('capacity', type=int)
+parser.add_argument('category')
 
 start_parser = reqparse.RequestParser()
 start_parser.add_argument('timezone', location='start')
@@ -83,6 +84,9 @@ class Course(Resource):
 # Methods for a list of courses
 class CourseList(Resource):
     @jwt_required
-    def get(self):
-        course_list = courses.get_courses()
+    def get(self, category):
+        if category:
+            course_list = courses.get_courses_by_category(category)
+        else:
+            course_list = courses.get_courses()
         return {'courses': course_list}

@@ -6,7 +6,7 @@ class Course(Document):
     # instructor = ReferenceField('Instructor')
     name = StringField(required=True)
     # location = GeoPointField(required=True)
-    # category = ReferenceField('Category')
+    category = StringField()
     # difficulty = IntField()
     # image_links = ListField(URLField())
     start = DateTimeField()
