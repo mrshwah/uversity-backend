@@ -36,10 +36,7 @@ def update_user(update_args, user_id):
 
 
 def delete_user(user_id):
-    try:
-        user = User.objects(eb_id=user_id)[0]
-    except IndexError:
-        return IndexError
+    user = User.objects(eb_id=user_id)[0]
 
     user.delete()
 
