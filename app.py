@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import resources
 import models
 import services
@@ -7,6 +8,7 @@ import config
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(config.Config)
     resources.init_app(app)
     models.init_app(app)

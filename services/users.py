@@ -7,6 +7,19 @@ def get_user(user_id):
 
 
 def create_user(user_args):
-    user = User(eb_id=user_args['id'], oauth_token=user_args['oauth_token'])
+    primary_email = ''
+    for email in user_args['emails']:
+        if email['primary']:
+            primary_email = email['email']
+
+    user = User(
+        eb_id=user_args['id'],
+        first_name=user_args['first_name'],
+        last_name=user_args['last_name'],
+        email=primary_email,
+        oauth_token=user_args['oauth_token']
+    )
+    user = User(eb_id=user_args['id'])
     user.save()
+
     return user.to_dict()
