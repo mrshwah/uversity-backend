@@ -13,11 +13,17 @@ def get_courses():
     return courses
 
 
+def get_courses_by_category(category):
+    courses = [course.to_dict() for course in Course.objects(category=category)]
+    return courses
+
+
 def create_course(course_args):
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
                     start=datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ"),
                     end=datetime.strptime(course_args['end'], "%Y-%m-%dT%H:%M:%SZ"),
-                    capacity=course_args['capacity'])
+                    capacity=course_args['capacity'],
+                    category=course_args['category'])
     course.save()
     return course.to_dict()
