@@ -1,12 +1,11 @@
-from flask_restful import Resource, reqparse
-
-post_parser = reqparse.RequestParser()
-post_parser.add_argument('access_code')
+from flask_restful import Resource
+from models.users import User as UserModel
 
 
-class User(Resource):
+class Users(Resource):
     def get(self):
-        pass
+        users = [ob.to_dict() for ob in UserModel.objects()]
+        return users
 
     def put(self):
         pass
