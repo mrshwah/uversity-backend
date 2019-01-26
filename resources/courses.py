@@ -4,12 +4,12 @@ import services.eventbrite as eb
 import services.courses as courses
 import services.users as users
 
-parser = reqparse.RequestParser()
-parser.add_argument('name')
-parser.add_argument('start', type=dict)
-parser.add_argument('end', type=dict)
-parser.add_argument('capacity', type=int)
-parser.add_argument('category')
+course_parser = reqparse.RequestParser()
+course_parser.add_argument('name')
+course_parser.add_argument('start', type=dict)
+course_parser.add_argument('end', type=dict)
+course_parser.add_argument('capacity', type=int)
+course_parser.add_argument('category')
 
 start_parser = reqparse.RequestParser()
 start_parser.add_argument('timezone', location='start')
@@ -31,7 +31,7 @@ class Course(Resource):
 
     @jwt_required
     def post(self):
-        args = parser.parse_args()
+        args = course_parser.parse_args()
         start_args = start_parser.parse_args(args)
         end_args = end_parser.parse_args(args)
         user_id = get_jwt_identity()
@@ -53,7 +53,7 @@ class Course(Resource):
             course = courses.get_course(course_id)
         except IndexError:
             return {'error': True, 'message': 'Course not found!'}, 404
-        args = parser.parse_args()
+        args = course_parser.parse_args()
         start_args = start_parser.parse_args(args)
         end_args = end_parser.parse_args(args)
         user_id = get_jwt_identity()
@@ -90,3 +90,11 @@ class CourseList(Resource):
         else:
             course_list = courses.get_courses()
         return {'courses': course_list}
+
+
+class CourseEnroll(Resource):
+    @jwt_required
+    def post(self, course_id):
+        user_id = get_jwt_identity()
+        courses.enroll_user_in_course(course_id, user_id)
+        return {'course': courses}
