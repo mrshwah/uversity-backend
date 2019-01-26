@@ -3,13 +3,13 @@ from mongoengine import Document, StringField, IntField
 
 class Review(Document):
     comment = StringField()
-    poster_id = StringField()
-    instructor_id = StringField()
-    class_name = StringField()
-    environment_rating = IntField()
-    organization_rating = IntField()
-    clarity_rating = IntField()
-    expertise_rating = IntField()
+    poster_id = StringField(required=True)
+    instructor_id = StringField(required=True)
+    class_name = StringField(required=True)
+    environment_rating = IntField(required=True)
+    organization_rating = IntField(required=True)
+    clarity_rating = IntField(required=True)
+    expertise_rating = IntField(required=True)
 
     def to_dict(self):
         dictionary = self.to_mongo()
