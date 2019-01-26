@@ -3,7 +3,6 @@ from models.users import User
 
 def get_user(user_id):
     user = User.objects(eb_id=user_id)[0]
-
     return user.to_dict()
 
 

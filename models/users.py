@@ -1,5 +1,16 @@
-from mongoengine import Document, StringField, ImageField, ListField, ReferenceField
 from models.courses import Course
+from mongoengine import Document, EmbeddedDocument, StringField, ImageField, ListField, ReferenceField, FloatField, EmbeddedDocumentField
+
+
+class Instructor(EmbeddedDocument):
+    # user = ReferenceField(User)
+    reputation = FloatField()
+    history = ListField()
+
+    def to_dict(self):
+        dictionary = self.to_mongo()
+        dictionary['user'] = User.objects.get(id=dictionary['user']).to_dict()
+        return {k: v for (k, v) in dictionary.items() if k != '_id'}
 
 
 class User(Document):
@@ -11,6 +22,8 @@ class User(Document):
     # profile_img = ImageField()
     interests = ListField(required=False)
     course_history = ListField(ReferenceField(Course))
+    instructor = EmbeddedDocumentField(Instructor)
+    develop
 
     def to_dict(self):
         dictionary = self.to_mongo()
