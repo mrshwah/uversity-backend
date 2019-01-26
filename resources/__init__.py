@@ -10,4 +10,4 @@ def init_app(app):
     api.add_resource(Auth, '/auth')
     api.add_resource(ClientId, '/client_id')
     api.add_resource(Users, '/users')
-    api.add_resource(Course, '/course')
+    api.add_resource(Course, '/course', '/course/<int:course_id>')

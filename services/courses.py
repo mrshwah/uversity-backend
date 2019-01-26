@@ -3,6 +3,11 @@ from models.courses import Course
 
 
 # Services for Course
+def get_course(course_id):
+    course = Course.objects(eb_id=course_id)[0]
+    return course.to_dict()
+
+
 def create_course(course_args):
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],

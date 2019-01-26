@@ -20,8 +20,13 @@ end_parser.add_argument('utc', location='e')
 
 
 class Course(Resource):
-    def get(self):
-        pass
+    @jwt_required
+    def get(self, course_id):
+        try:
+            course = courses.get_course(course_id)
+        except IndexError:
+            return {'error': True, 'message': 'Course not found!'}, 403
+        return {'course': course}
 
     @jwt_required
     def post(self):
@@ -41,8 +46,9 @@ class Course(Resource):
         course = courses.create_course(args)
         return {'course': course}
 
+    @jwt_required
     def put(self):
-        pass
+        passgg
 
     def delete(self):
         pass
