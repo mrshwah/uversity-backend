@@ -1,6 +1,8 @@
 from mongoengine import *
 from models.users import User
+from datetime import datetime
 
+fmt = "%Y-%m-%dT%H:%M:%SZ"
 
 class Course(Document):
     eb_id = StringField(required=True)

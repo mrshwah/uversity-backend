@@ -29,8 +29,8 @@ def create_course(course_args):
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
                     description=course_args['description'],
-                    start=datetime.strptime(course_args['start'][:-6]+'Z', fmt),
-                    end=datetime.strptime(course_args['end'][:-6]+'Z', fmt),
+                    start=course_args['start'],
+                    end=course_args['end'],
                     capacity=course_args['capacity'],
                     category=course_args['category'],
                     instructor=instructor
