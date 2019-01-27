@@ -44,6 +44,7 @@ class Course(Resource):
         args['eb_id'] = event_id
         args['start'] = start_args['utc']
         args['end'] = end_args['utc']
+        args['instructor'] = user_id
         course = courses.create_course(args)
         return {'course': course}
 
@@ -85,10 +86,7 @@ class Course(Resource):
 class CourseList(Resource):
     @jwt_required
     def get(self, category):
-        if category:
-            course_list = courses.get_courses_by_category(category)
-        else:
-            course_list = courses.get_courses()
+        course_list = courses.get_courses_by_category(category)
         return {'courses': course_list}
 
 

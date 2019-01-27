@@ -2,26 +2,24 @@ from models.reviews import Review
 from models.users import User
 
 
-def calculate_aggregate(cla, env, exp, org):
-    return (cla+env+exp+org)/4
+def get_reviews(instructor_id):
+    reviews = [review.to_dict() for review in Review.objects(instructor=instructor_id)]
+    return reviews
 
 
 #   Create Review
 def create_review(review_args):
-    poster = User.objects(eb_id=review_args['poster_id'])[0]
+    poster = User.objects(eb_id=review_args['poster'])[0]
 
     review = Review(comment=review_args['comment'],
-                    poster_id=poster,
-                    instructor_id=review_args['instructor_id'],
+                    poster=poster,
+                    instructor=review_args['instructor_id'],
                     class_name=review_args['class_name'],
                     environment_rating=review_args['environment_rating'],
                     organization_rating=review_args['organization_rating'],
                     clarity_rating=review_args['clarity_rating'],
                     expertise_rating=review_args['expertise_rating'])
-    review.aggregate_rating = calculate_aggregate(review.clarity_rating,
-                                                  review.environment_rating,
-                                                  review.expertise_rating,
-                                                  review.organization_rating)
+    review.calculate_aggregate()
     review.save()
     return review.to_dict()
 

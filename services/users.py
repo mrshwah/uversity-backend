@@ -25,18 +25,15 @@ def create_user(user_args):
 
 
 def update_user(update_args, user_id):
-    user = User.objects(eb_id=user_id)[0]
-
+    user = User.objects.get(eb_id=user_id)
     user.interests = update_args['interests']
-    user.course_history = update_args['course_history']
-    # user.student_reputation = update_args['student_reputation']
     user.save()
 
     return user.to_dict()
 
 
 def delete_user(user_id):
-    user = User.objects(eb_id=user_id)[0]
+    user = User.objects.get(eb_id=user_id)
 
     user.delete()
 
