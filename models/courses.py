@@ -6,6 +6,7 @@ class Course(Document):
     eb_id = StringField(required=True)
     instructor = ReferenceField(User)
     name = StringField(required=True)
+    description = StringField(required=True)
     # location = GeoPointField(required=True)
     category = StringField()
     # difficulty = IntField()

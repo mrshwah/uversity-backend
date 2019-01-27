@@ -23,6 +23,7 @@ def create_course(course_args):
     instructor = User.objects.get(eb_id=course_args['instructor'])
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
+                    description=course_args['description'],
                     start=datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ"),
                     end=datetime.strptime(course_args['end'], "%Y-%m-%dT%H:%M:%SZ"),
                     capacity=course_args['capacity'],
@@ -36,6 +37,7 @@ def create_course(course_args):
 def update_course(course_id, course_args):
     course = Course.objects.get(eb_id=course_id)
     course.name = course_args['name']
+    course.description = course_args['description'],
     course.start = datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ")
     course.end = datetime.strptime(course_args['end'], "%Y-%m-%dT%H:%M:%SZ")
     course.capacity = course_args['capacity']
