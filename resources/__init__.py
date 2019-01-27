@@ -6,6 +6,8 @@ from .reviews import ReviewList
 from .users import User
 from .courses import Course, CourseList, CourseEnroll
 from .instructors import Instructor
+
+from .categories import CategoryList
 from .aggregates import Aggregates
 
 
@@ -20,4 +22,5 @@ def init_app(app):
     api.add_resource(Course, '/course', '/course/<int:course_id>')
     api.add_resource(CourseList, '/courses/<string:category>')
     api.add_resource(CourseEnroll, '/course/<string:course_id>/enroll')
+    api.add_resource(CategoryList, '/categories')
     api.add_resource(Aggregates, '/instructor/aggregates/<string:instructor_id>')
