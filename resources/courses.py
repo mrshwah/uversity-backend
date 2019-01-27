@@ -38,7 +38,7 @@ class Course(Resource):
         user_id = get_jwt_identity()
         oauth_token = users.get_user(user_id)['oauth_token']
         event_args = {'event': {'name': {'html': '<p>{}<p>'.format(args['name'])},
-                                'description': args['description'],
+                                'description': {'html': '<p>{}<p>'.format(args['description'])},
                                 'start': {'timezone': start_args['timezone'], 'utc': start_args['utc']},
                                 'end': {'timezone': end_args['timezone'], 'utc': end_args['utc']},
                                 'currency': 'USD', 'capacity': args['capacity']}}
