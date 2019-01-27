@@ -1,6 +1,8 @@
-from models.categories import Category as categories
+from models.categories import Category
 
 
 def get_categories():
-    return categories.to_dict()
+    categories = Category.objects()
+    categories = [category.to_dict() for category in Category.objects()]
+    return categories
 
