@@ -30,7 +30,7 @@ class Review(Resource):
     @jwt_required
     def delete(self, id):
         review = ReviewModel.objects.get(id=id)
-        review.delete_review(args)
+        review.delete_review()
         return True
 
 
