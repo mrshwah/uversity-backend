@@ -6,7 +6,7 @@ from models.courses import Course
 from models.users import User
 from services.instructors import create_instructor
 
-
+fmt = "%Y-%m-%dT%H:%M:%SZ"
 # Services for Course
 def get_course(course_id):
     course = Course.objects.get(eb_id=course_id)
@@ -32,8 +32,8 @@ def create_course(course_args):
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
                     description=course_args['description'],
-                    start=datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ"),
-                    end=datetime.strptime(course_args['end'], "%Y-%m-%dT%H:%M:%SZ"),
+                    start=datetime.strptime(course_args['start'][:-6]+'Z', fmt),
+                    end=datetime.strptime(course_args['end'][:-6]+'Z', fmt),
                     capacity=course_args['capacity'],
                     category=course_args['category'],
                     instructor=instructor

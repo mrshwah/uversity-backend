@@ -1,5 +1,6 @@
 from mongoengine import *
 from models.users import User
+import datetime
 
 
 class Course(Document):
@@ -20,8 +21,8 @@ class Course(Document):
         dictionary['instructor'] = User.objects.get(id=dictionary['instructor']).to_dict()
         dictionary['student_list'] = [User.objects.get(id=student).to_dict() for student in dictionary['student_list']]
         dictionary = {k: v for (k, v) in dictionary.items() if k != '_id'}
-        dictionary['start'] = dictionary['start'].isoformat(' ')
-        dictionary['end'] = dictionary['end'].isoformat(' ')
+        dictionary['start'] = datetime.datetime.strptime('{}'.format(dictionary['start'][:-6]), '%Y-%m-%dT%H:%M:%SZ')
+        dictionary['end'] = datetime.datetime.strptime('{}'.format(dictionary['end'][:-6]), '%Y-%m-%dT%H:%M:%SZ')
         return dictionary
 
     def enroll_user(self, user_id):
