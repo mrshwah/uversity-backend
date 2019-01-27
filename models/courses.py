@@ -4,7 +4,7 @@ from models.users import User
 
 class Course(Document):
     eb_id = StringField(required=True)
-    instructor_id = StringField(required=True)
+    instructor = ReferenceField(User)
     name = StringField(required=True)
     # location = GeoPointField(required=True)
     category = StringField()
@@ -16,7 +16,8 @@ class Course(Document):
 
     def to_dict(self):
         dictionary = self.to_mongo()
-        dictionary['student_list'] = [student.to_dict() for student in dictionary['student_list']]
+        dictionary['instructor'] = User.objects.get(id=dictionary['instructor']).to_dict()
+        dictionary['student_list'] = [User.objects.get(id=student).to_dict() for student in dictionary['student_list']]
         dictionary = {k: v for (k, v) in dictionary.items() if k != '_id'}
         dictionary['start'] = dictionary['start'].isoformat(' ')
         dictionary['end'] = dictionary['end'].isoformat(' ')
@@ -25,15 +26,15 @@ class Course(Document):
     def enroll_user(self, user_id):
         user = User.objects.get(eb_id=user_id)
         try:
-            user_course_history = CourseHistory.objects(user=user_id)
+            user_course_history = CourseHistory.objects(user=user)[0]
         except IndexError:
             user_course_history = CourseHistory(user=user)
         user_course_history.courses += [self]
-        self.student_list += [user_id]
+        self.student_list += [user.id]
         self.capacity -= 1
         self.save()
 
 
 class CourseHistory(Document):
     user = ReferenceField(User)
-    courses = ListField(ReferenceField(Course))
+    courses = ListField(ReferenceField(Course), default=[])

@@ -86,10 +86,7 @@ class Course(Resource):
 class CourseList(Resource):
     @jwt_required
     def get(self, category):
-        if category:
-            course_list = courses.get_courses_by_category(category)
-        else:
-            course_list = courses.get_courses()
+        course_list = courses.get_courses_by_category(category)
         return {'courses': course_list}
 
 

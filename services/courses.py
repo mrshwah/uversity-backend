@@ -20,7 +20,7 @@ def get_courses_by_category(category):
 
 
 def create_course(course_args):
-    instructor = User.objects.get(eb_id=course_args['user_id'])
+    instructor = User.objects.get(eb_id=course_args['instructor'])
     course = Course(eb_id=course_args['eb_id'],
                     name=course_args['name'],
                     start=datetime.strptime(course_args['start'], "%Y-%m-%dT%H:%M:%SZ"),
