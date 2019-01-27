@@ -4,6 +4,9 @@ import services.eventbrite as eb
 import services.courses as courses
 import services.users as users
 
+import moment
+from datetime import datetime
+
 course_parser = reqparse.RequestParser()
 course_parser.add_argument('name')
 course_parser.add_argument('description')
@@ -36,13 +39,21 @@ class Course(Resource):
         start_args = start_parser.parse_args(args)
         end_args = end_parser.parse_args(args)
         user_id = get_jwt_identity()
+        print(user_id)
         oauth_token = users.get_user(user_id)['oauth_token']
+
+        start_utc = start_args['utc'][:-6]+'Z'
+        end_utc = end_args['utc'][:-6]+'Z'
+
         event_args = {'event': {'name': {'html': '<p>{}<p>'.format(args['name'])},
                                 'description': {'html': '<p>{}<p>'.format(args['description'])},
-                                'start': {'timezone': start_args['timezone'], 'utc': start_args['utc']},
-                                'end': {'timezone': end_args['timezone'], 'utc': end_args['utc']},
+                                'start': {'timezone': start_args['timezone'], 'utc': start_utc},
+                                'end': {'timezone': end_args['timezone'], 'utc': end_utc},
                                 'currency': 'USD', 'capacity': args['capacity'], 'listed': 'False'}}
+
+        print(event_args)
         event_id = eb.create_event(oauth_token, event_args).id
+        print(event_id)
         args['eb_id'] = event_id
         args['start'] = start_args['utc']
         args['end'] = end_args['utc']

@@ -33,7 +33,11 @@ def get_user_orders(token):
 # courses
 def create_event(token, event_args):
     eventbrite = Eventbrite(token)
-    event = eventbrite.post_event(event_args)
+    try:
+        event = eventbrite.post_event(event_args)
+    except Exception:
+        print(Exception)
+
     return event
 
 
