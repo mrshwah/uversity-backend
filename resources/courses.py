@@ -41,7 +41,7 @@ class Course(Resource):
                                 'description': {'html': '<p>{}<p>'.format(args['description'])},
                                 'start': {'timezone': start_args['timezone'], 'utc': start_args['utc']},
                                 'end': {'timezone': end_args['timezone'], 'utc': end_args['utc']},
-                                'currency': 'USD', 'capacity': args['capacity']}}
+                                'currency': 'USD', 'capacity': args['capacity'], 'listed': 'False'}}
         event_id = eb.create_event(oauth_token, event_args).id
         args['eb_id'] = event_id
         args['start'] = start_args['utc']
@@ -65,7 +65,7 @@ class Course(Resource):
                                 'description': args['description'],
                                 'start': {'timezone': start_args['timezone'], 'utc': start_args['utc']},
                                 'end': {'timezone': end_args['timezone'], 'utc': end_args['utc']},
-                                'currency': 'USD', 'capacity': args['capacity']}}
+                                'currency': 'USD', 'capacity': args['capacity'], 'listed': 'False'}}
         eb.update_event(oauth_token, course_id, event_args)
         args['start'] = start_args['utc']
         args['end'] = end_args['utc']
@@ -96,7 +96,19 @@ class CourseList(Resource):
 class CourseEnroll(Resource):
     @jwt_required
     def post(self, course_id):
-        print(course_id)
         user_id = get_jwt_identity()
         course = courses.enroll_user_in_course(course_id, user_id)
         return {'course': course}
+
+
+class PublishCourse(Resource):
+    @jwt_required
+    def post(self, course_id):
+        try:
+            course = courses.get_course(course_id)
+        except IndexError:
+            return {'error': True, 'message': 'Course not found!'}, 404
+        user_id = get_jwt_identity()
+        oauth_token = users.get_user(user_id)['oauth_token']
+        published = eb.publish_event(oauth_token, course_id)
+        return {'published': published}
