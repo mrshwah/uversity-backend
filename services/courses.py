@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from models.courses import Course
 from models.users import User
 from services.instructors import create_instructor

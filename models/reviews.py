@@ -15,7 +15,7 @@ class Review(Document):
 
     def to_dict(self):
         dictionary = self.to_mongo()
-        dictionary['poster'] = User.objects.get(eb_id=dictionary['poster']).to_dict()
+        dictionary['poster'] = User.objects.get(id=dictionary['poster']).to_dict()
         dictionary['instructor'] = User.objects.get(instructor=dictionary['instructor']).to_dict()
         return {k: v for (k, v) in dictionary.items() if k != '_id'}
 
