@@ -47,3 +47,8 @@ def delete_event(token, event_id):
     eventbrite = Eventbrite(token)
     event = eventbrite.delete("/events/{}/".format(event_id))
     return event
+
+def publish_event(token, event_id):
+    eventbrite = Eventbrite(token)
+    event = eventbrite.publish_event(event_id)
+    return event
