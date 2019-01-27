@@ -1,19 +1,17 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
 import services.reviews as reviews
 from models.reviews import Review as ReviewModel
 
 post_parser = reqparse.RequestParser()
 
-review_args = ['comment',
-        'poster_id',
-        'instructor_id',
-        'class_name',
-        'environment_rating',
-        'organization_rating',
-        'clarity_rating',
-        'expertise_rating']
-for arg in review_args:
-    post_parser.add_argument(arg)
+post_parser.add_argument('comment')
+post_parser.add_argument('instructor_id')
+post_parser.add_argument('class_name')
+post_parser.add_argument('environment_rating', type=int)
+post_parser.add_argument('organization_rating', type=int)
+post_parser.add_argument('clarity_rating', type=int)
+post_parser.add_argument('expertise_rating', type=int)
 
 
 class Review(Resource):
@@ -27,34 +25,24 @@ class Review(Resource):
         review_args = args
         review = reviews.update_review(review_args)
         review.save()
-        pass
 
+    @jwt_required
     def post(self):
-        args = post_parser.parse_args()
-        review_args = args
+        user_id = get_jwt_identity()
+        review_args = post_parser.parse_args()
+        review_args['poster'] = user_id
         review = reviews.create_review(review_args)
         return {'review': review}
 
+    @jwt_required
     def delete(self, id):
-        reviews = ReviewModel.objects.get(id)
-        reviews.delete_review(review_args)
+        review = ReviewModel.objects.get(id=id)
+        review.delete_review()
         return True
 
 
-# post_parser_list = reqparse.RequestParser()
-# args = ['comment',
-#         'poster_id',
-#         'instructor_id',
-#         'class_name',
-#         'environment_rating',
-#         'organization_rating',
-#         'clarity_rating',
-#         'expertise_rating']
-# for arg in args:
-#     post_parser_list.add_argument(arg)
-
-
 class ReviewList(Resource):
-    def get(self):
-        reviews = [ob.to_dict() for ob in ReviewModel.objects()]
-        return reviews
+    @jwt_required
+    def get(self, instructor_id):
+        review_list = reviews.get_reviews(instructor_id)
+        return {'reviews': review_list}

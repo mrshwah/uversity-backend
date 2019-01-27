@@ -12,6 +12,7 @@ class Config(object):
     MONGODB_DB = os.environ.get("MONGODB_DB")
     EB_CLIENT_ID = os.environ.get("EB_CLIENT_ID")
     EB_CLIENT_SECRET = os.environ.get("EB_CLIENT_SECRET")
+    JWT_ACCESS_TOKEN_EXPIRES = False
 
 
 class ProductionConfig(Config):

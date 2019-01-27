@@ -1,16 +1,12 @@
-from models.courses import Course
-from mongoengine import Document, EmbeddedDocument, StringField, ImageField, ListField, ReferenceField, FloatField, EmbeddedDocumentField
+from mongoengine import Document, StringField, ListField, ReferenceField, FloatField
 
 
-class Instructor(EmbeddedDocument):
-    # user = ReferenceField(User)
+class Instructor(Document):
     reputation = FloatField()
-    history = ListField()
 
     def to_dict(self):
         dictionary = self.to_mongo()
-        dictionary['user'] = User.objects.get(id=dictionary['user']).to_dict()
-        return {k: v for (k, v) in dictionary.items() if k != '_id'}
+        return {k: str(v) for (k, v) in dictionary.items()}
 
 
 class User(Document):
@@ -21,16 +17,13 @@ class User(Document):
     email = StringField(required=True)
     # profile_img = ImageField()
     interests = ListField(required=False)
-    course_history = ListField(ReferenceField(Course))
-    instructor = EmbeddedDocumentField(Instructor)
-    develop
+    instructor = ReferenceField(Instructor)
 
     def to_dict(self):
         dictionary = self.to_mongo()
-        dictionary['course_history'] = [Course.objects.get(id=id).to_dict() for id in dictionary['course_history']]
+        try:
+            dictionary['instructor'] = Instructor.objects.get(id=dictionary['instructor']).to_dict()
+        except KeyError:
+            pass
+        dictionary['_id'] = str(dictionary['_id'])
         return {k: v for (k, v) in dictionary.items() if k != '_id'}
-
-    def add_course(self, course_id):
-        course = Course.objects(eb_id=course_id)
-        self.course_history += course
-        self.save()

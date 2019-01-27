@@ -6,6 +6,7 @@ import services.users as users
 
 course_parser = reqparse.RequestParser()
 course_parser.add_argument('name')
+course_parser.add_argument('description')
 course_parser.add_argument('start', type=dict)
 course_parser.add_argument('end', type=dict)
 course_parser.add_argument('capacity', type=int)
@@ -37,6 +38,7 @@ class Course(Resource):
         user_id = get_jwt_identity()
         oauth_token = users.get_user(user_id)['oauth_token']
         event_args = {'event': {'name': {'html': '<p>{}<p>'.format(args['name'])},
+                                'description': {'html': '<p>{}<p>'.format(args['description'])},
                                 'start': {'timezone': start_args['timezone'], 'utc': start_args['utc']},
                                 'end': {'timezone': end_args['timezone'], 'utc': end_args['utc']},
                                 'currency': 'USD', 'capacity': args['capacity']}}
@@ -44,6 +46,7 @@ class Course(Resource):
         args['eb_id'] = event_id
         args['start'] = start_args['utc']
         args['end'] = end_args['utc']
+        args['instructor'] = user_id
         course = courses.create_course(args)
         return {'course': course}
 
@@ -59,6 +62,7 @@ class Course(Resource):
         user_id = get_jwt_identity()
         oauth_token = users.get_user(user_id)['oauth_token']
         event_args = {'event': {'name': {'html': '<p>{}<p>'.format(args['name'])},
+                                'description': args['description'],
                                 'start': {'timezone': start_args['timezone'], 'utc': start_args['utc']},
                                 'end': {'timezone': end_args['timezone'], 'utc': end_args['utc']},
                                 'currency': 'USD', 'capacity': args['capacity']}}
@@ -85,10 +89,7 @@ class Course(Resource):
 class CourseList(Resource):
     @jwt_required
     def get(self, category):
-        if category:
-            course_list = courses.get_courses_by_category(category)
-        else:
-            course_list = courses.get_courses()
+        course_list = courses.get_courses_by_category(category)
         return {'courses': course_list}
 
 
