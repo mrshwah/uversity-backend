@@ -5,8 +5,8 @@ from services.instructors import create_instructor, get_instructor
 
 class Instructor(Resource):
     @jwt_required
-    def get(self, instructor_id):
-        instructor = get_instructor(instructor_id)
+    def get(self, id):
+        instructor = get_instructor(id)
         return {'instructor': instructor}
 
     def put(self):
