@@ -4,9 +4,6 @@ import services.eventbrite as eb
 import services.courses as courses
 import services.users as users
 
-import moment
-from datetime import datetime
-
 course_parser = reqparse.RequestParser()
 course_parser.add_argument('name')
 course_parser.add_argument('description')
