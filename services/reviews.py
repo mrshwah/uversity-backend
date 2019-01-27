@@ -3,7 +3,7 @@ from models.users import User
 
 
 def get_reviews(instructor_id):
-    reviews = [review.to_dict() for review in Review.objects(instructor_id=instructor_id)]
+    reviews = [review.to_dict() for review in Review.objects(instructor=instructor_id)]
     return reviews
 
 
